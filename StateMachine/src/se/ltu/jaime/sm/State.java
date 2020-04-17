@@ -20,6 +20,11 @@ public class State {
         return name;
     }
 
+    /**
+     * Returns the indexes of the of the Transitions attached to this State
+     * 
+     * @return The indexes of the Transitions
+     */
     public List<Integer> transitionsIndexes() {
         return transitionsIndexes;
     }

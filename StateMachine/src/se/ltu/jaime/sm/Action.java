@@ -10,10 +10,12 @@ public class Action {
     }
 
     /**
-     * Function that executes code according to the action of the transition
+     * Function that executes code according to the action attached to the transition
      * 
-     * @param environment The environment keeps a map of variables that can be modified outside
-     * of this system, and are to be matched to the guards of the transitions
+     * @param environment The environment keeps a map of variables that can be modified in the context
+     *  of this State Machine.<br> 
+     *  The variables in the environment are match against the guards of the transitions and modified 
+     *  by actions or external actors upon the State Machine.
      */
     public void trigger(final Map<String, Object> environment) {
     	

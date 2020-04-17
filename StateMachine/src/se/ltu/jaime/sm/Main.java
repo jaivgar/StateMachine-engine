@@ -41,9 +41,14 @@ public class Main {
             )
         );
 
+        boolean endState;
+        
         System.out.println(machine.currentState().name());
 
-        machine.update();
+        endState = machine.update();
+        if (endState) {
+        	System.out.println("We reached the final state!");
+        }
         System.out.println(machine.currentState().name());
 
         machine.event("EVENT-X");
