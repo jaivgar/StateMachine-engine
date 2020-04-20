@@ -3,7 +3,7 @@ package se.ltu.jaime.sm;
 import java.util.Map;
 import java.util.Objects;
 
-public class Guard {
+public class Guard implements Evaluable<Map<String, Object>>{
     private final String variable;
     private final Object value;
 

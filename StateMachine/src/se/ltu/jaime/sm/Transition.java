@@ -1,9 +1,13 @@
 package se.ltu.jaime.sm;
 
+import java.util.Map;
+import java.util.Set;
+
 public class Transition {
     
-	private final Event event;
-    private final Guard guard;
+    // Added support for multiple events and guards with LogicExpression<>
+    private final LogicExpression<Event,Set<Event>> events;
+    private final LogicExpression<Guard, Map<String, Object>> guards;
     private final Action action;
     private final int targetState;
     
@@ -13,19 +17,19 @@ public class Transition {
      */
    
 
-    public Transition(final Event event, final Guard guard, final Action action, final int targetState) {
-        this.event = event;
-        this.guard = guard;
+    public Transition(final LogicExpression<Event, Set<Event>> event, final LogicExpression<Guard, Map<String, Object>> guard, final Action action, final int targetState) {
+        this.events = event;
+        this.guards = guard;
         this.action = action;
         this.targetState = targetState;
     }
 
-    public Event event() {
-        return event;
+    public LogicExpression<Event, Set<Event>> event() {
+        return events;
     }
 
-    public Guard guard() {
-        return guard;
+    public LogicExpression<Guard, Map<String, Object>> guard() {
+        return guards;
     }
 
     public Action action() {

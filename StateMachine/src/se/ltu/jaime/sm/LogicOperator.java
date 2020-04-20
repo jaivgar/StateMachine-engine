@@ -1,15 +1,21 @@
 package se.ltu.jaime.sm;
 
+/**
+ * This enumeration represents the basic logical operators that can be used to test
+ * events and guards. At the moment it supports NOT, AND, OR and XOR.
+ *
+ */
 public enum LogicOperator {
 	
-	/*TODO: I will probably need to wrapp the operator with the event/guards in another object, 
-	 * like a EventExpression, because an event can not have an operator (except NOT), they are
-	 * relations between operands
+	/*TODO: I will probably need to wrap the operators with the event/guards in an extra class, 
+	 * like a LogicExpression, because an event can not have an operator (except NOT), they are
+	 * relations between operands. Further functionality is achieved if this logic expression
+	 * can be composed of logic expression.
 	 */
 	
 	NOT{
 		@Override
-		public boolean testLogic(final boolean... operands) throws IllegalNumberOfOperandsException {
+		public boolean evaluateOperator(final Boolean... operands) throws IllegalNumberOfOperandsException {
 			// NOT operations can only accept one operand
 			if(operands == null || operands.length != 1)
 			{
@@ -23,7 +29,7 @@ public enum LogicOperator {
 	},
 	AND{
 		@Override
-		public boolean testLogic(final boolean... operands) throws IllegalNumberOfOperandsException {
+		public boolean evaluateOperator(final Boolean... operands) throws IllegalNumberOfOperandsException {
 			// AND operations can only accept two or more operands
 			if(operands == null || operands.length < 2)
 			{
@@ -42,7 +48,7 @@ public enum LogicOperator {
 	},
 	OR{
 		@Override
-		public boolean testLogic(final boolean... operands) throws IllegalNumberOfOperandsException {
+		public boolean evaluateOperator(final Boolean... operands) throws IllegalNumberOfOperandsException {
 			// OR operations can only accept two or more operands
 			if(operands == null || operands.length < 2)
 			{
@@ -61,7 +67,7 @@ public enum LogicOperator {
 	},
 	XOR{
 		@Override
-		public boolean testLogic(final boolean... operands) throws IllegalNumberOfOperandsException {
+		public boolean evaluateOperator(final Boolean... operands) throws IllegalNumberOfOperandsException {
 			// XOR operations can only accept two operands
 			if(operands == null || operands.length != 2)
 			{
@@ -74,6 +80,11 @@ public enum LogicOperator {
 		}
 	};
 	
-	public abstract boolean testLogic(final boolean... operands) throws IllegalNumberOfOperandsException;
+	/**
+	 * Combines the boolean representation of the operands according to the operator chosen.
+	 * 
+	 * @param operands The array of operands as boolean variables that will be used by the operators
+	 */
+	public abstract boolean evaluateOperator(final Boolean... operands) throws IllegalNumberOfOperandsException;
 
 }

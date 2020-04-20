@@ -2,7 +2,7 @@ package se.ltu.jaime.sm;
 
 import java.util.Set;
 
-public class Event {
+public class Event implements Evaluable<Set<Event>>{
     private final String eventName;
 
     public Event(final String name) {
