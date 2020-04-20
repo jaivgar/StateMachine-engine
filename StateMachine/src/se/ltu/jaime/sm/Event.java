@@ -3,19 +3,23 @@ package se.ltu.jaime.sm;
 import java.util.Set;
 
 public class Event {
-    private final Set<String> names;
+    private final String eventName;
 
-    public Event(final Set<String> names) {
-        this.names = names;
+    public Event(final String name) {
+        this.eventName = name;
     }
 
-    /**
-     * Searches the event set for the specified events.
+    public String getNames() {
+		return eventName;
+	}
+    
+	/**
+     * Searches if the event set passed as argument has triggered this event.
      * 
-     * @param names The event names to be searched for in the event set.
+     * @param names The set of event names that have been triggered.
      * @return True if the event was found, false otherwise.
      */
-    public boolean evaluate(final Set<String> names) {
-        return names.containsAll(this.names);
+    public boolean evaluate(final Set<Event> names) {
+        return names.contains(this.eventName);
     }
 }

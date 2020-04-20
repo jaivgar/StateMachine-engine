@@ -3,9 +3,8 @@ package se.ltu.jaime.sm;
 import java.util.*;
 
 public class StateMachine {
-	// Would the class Event fit instead of this var?
-    private final Set<String> events;
-    
+	
+    private final Set<Event> events;
     private final Map<String, Object> environment;
     private final List<State> states;
     private final List<Transition> transitions;
@@ -40,7 +39,7 @@ public class StateMachine {
      * @param name The event name to be added to the set of Events
      */
     public void event(final String name) {
-        events.add(name);
+        events.add(new Event(name));
     }
 
     /**

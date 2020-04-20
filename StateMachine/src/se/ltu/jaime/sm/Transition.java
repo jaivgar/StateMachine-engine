@@ -5,7 +5,7 @@ public class Transition {
 	private final Event event;
     private final Guard guard;
     private final Action action;
-    private final int target;
+    private final int targetState;
     
     /*
      *  In the event of several transitions meeting the requirements of being trigger, the use 
@@ -13,11 +13,11 @@ public class Transition {
      */
    
 
-    public Transition(final Event event, final Guard guard, final Action action, final int target) {
+    public Transition(final Event event, final Guard guard, final Action action, final int targetState) {
         this.event = event;
         this.guard = guard;
         this.action = action;
-        this.target = target;
+        this.targetState = targetState;
     }
 
     public Event event() {
@@ -33,6 +33,6 @@ public class Transition {
     }
 
     public int target() {
-        return target;
+        return targetState;
     }
 }
