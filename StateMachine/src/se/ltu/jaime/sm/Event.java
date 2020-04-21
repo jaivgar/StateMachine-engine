@@ -9,7 +9,7 @@ public class Event implements Evaluable<Set<Event>>{
         this.eventName = name;
     }
 
-    public String getNames() {
+    public String getName() {
 		return eventName;
 	}
     
@@ -20,6 +20,19 @@ public class Event implements Evaluable<Set<Event>>{
      * @return True if the event was found, false otherwise.
      */
     public boolean evaluate(final Set<Event> names) {
-        return names.contains(this.eventName);
+
+    	for(Event e: names) {
+    		if(e.getName().equals(this.eventName)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    	/*
+    	 * The use of contains() method from Set interface requires to 
+    	 * Override the equals() method from Object class, and therefore
+    	 * also the hash() method
+    	 */
+        //return names.contains(this);
     }
 }

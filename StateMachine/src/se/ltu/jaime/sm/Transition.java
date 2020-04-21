@@ -36,7 +36,7 @@ public class Transition {
         return action;
     }
 
-    public int target() {
+    public int targetState() {
         return targetState;
     }
 }
