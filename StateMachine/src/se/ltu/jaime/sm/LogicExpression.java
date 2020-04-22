@@ -70,7 +70,6 @@ public class LogicExpression<E extends Evaluable<C>, C> {
 				result = false;
 			}
 		}
-
 		return result;
 	}
 }

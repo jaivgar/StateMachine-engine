@@ -22,16 +22,28 @@ public class Event implements Evaluable<Set<Event>>{
     public boolean evaluate(final Set<Event> names) {
 
     	for(Event e: names) {
-    		if(e.getName().equals(this.eventName)) {
-    			return true;
+    		// An null object can never match an Event
+    		if(e == null) {
+    			continue;
+    		}
+    		// There could be an Event without name, which requires extra test
+    		if(e.getName() == null) {
+    			if (this.eventName == null) {
+    				return true;
+    			}
+    		}
+    		else {
+        		if(e.getName().equals(this.eventName)) {
+        			return true;
+        		}
     		}
     	}
     	
     	return false;
     	/*
-    	 * The use of contains() method from Set interface requires to 
-    	 * Override the equals() method from Object class, and therefore
-    	 * also the hash() method
+    	 * The use of contains() method from Set interface with Event Object 
+    	 * requires to override the equals() method from Object class, and 
+    	 * therefore also the hash() method
     	 */
         //return names.contains(this);
     }

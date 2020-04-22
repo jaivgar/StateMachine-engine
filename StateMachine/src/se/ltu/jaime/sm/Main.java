@@ -109,6 +109,8 @@ public class Main {
         			System.out.println("We set variable X = 0, and Y = 1");
         			machine.setVariable("x", 0);
         			machine.setVariable("y", 1);
+        			System.out.println("Received Event Y from external actor");
+            		machine.setEvent("EVENT-Y");
         		}
         		else {
         			machine.setVariable("x", (int)machine.getEnvironment().get("x") + 1);
