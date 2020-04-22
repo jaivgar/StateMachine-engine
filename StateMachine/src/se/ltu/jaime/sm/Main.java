@@ -47,7 +47,7 @@ public class Main {
 											List.of(new Event("EVENT-X"), new Event("EVENT-Y"))), 
         				new LogicExpression<Guard,Map<String, Object>>(
         									LogicOperator.OR, 
-        									List.of(new Guard("x", 2), new Guard("y", 1))), 
+        									List.of(new Guard("x", 4), new Guard("y", 1))), 
         				null, 
         				0
         		)
@@ -104,22 +104,27 @@ public class Main {
             		System.out.println("Received Event Y from external actor");
             		machine.setEvent("EVENT-Y");
         		}
-        		
-        		if ((Integer)machine.getEnvironment().get("x") == 4) {
-        			System.out.println("We set variable X = 0, and Y = 1");
-        			machine.setVariable("x", 0);
-        			machine.setVariable("y", 1);
-        			System.out.println("Received Event Y from external actor");
-            		machine.setEvent("EVENT-Y");
-        		}
         		else {
-        			machine.setVariable("x", (int)machine.getEnvironment().get("x") + 1);
-        			machine.setVariable("y", 0);
-        			
-        			System.out.println("We increase variable X to " + 
-							(int)machine.getEnvironment().get("x") +
-							", and set Y = 0");
+        			if ((Integer)machine.getEnvironment().get("x") == 5) {
+            			System.out.println("We set variable X = 0, and Y = 1");
+            			machine.setVariable("x", 0);
+            			machine.setVariable("y", 1);
+            		}
+            		else {
+            			machine.setVariable("x", (int)machine.getEnvironment().get("x") + 1);
+            			System.out.println("We increase variable X to " + 
+    							(int)machine.getEnvironment().get("x"));
+                		if (i%7 == 0) {
+                    		System.out.println("We set variable Y = 1");
+                    		machine.setVariable("y", 1);
+                		}
+                		else {
+                			machine.setVariable("y", 0);
+                			System.out.println("We set Y = 0");
+                		}	
+            		}
         		}
+        		
         	}
         	
         	i++;

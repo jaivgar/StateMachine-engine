@@ -8,11 +8,22 @@ public class Guard implements Evaluable<Map<String, Object>>{
     private final Object value;
 
     public Guard(final String variable, final Object value) {
+    	
+    	checkGuard(variable);
+    	
         this.variable = variable;
         this.value = value;
     }
+    
+    public String getVariable() {
+		return variable;
+	}
 
-    /**
+	public Object getValue() {
+		return value;
+	}
+
+	/**
      * Function that checks if the conditional expression of the guard is true, which is a requirement
      * to trigger the transition action and change state.
      * 
@@ -24,6 +35,22 @@ public class Guard implements Evaluable<Map<String, Object>>{
      * @return True if the guard logical expressions matches the environment variable, false otherwise
      */
     public boolean evaluate(final Map<String, Object> environment) {
-        return Objects.equals(environment.get(variable), value);
+    	if (!environment.containsKey(this.getVariable()))
+    		return false;
+    	
+    	return Objects.equals(environment.get(variable), value);
+
+    	/* Is there a difference between above and below?
+    	 * Below throws exception when environment.get(variable) == null
+    	 */
+    	//return environment.get(variable).equals(value);
+        
+    	
     }
+    
+    private void checkGuard(String guardName) {
+    	if (guardName == null) {
+    		throw new IllegalArgumentException("Guard has no name, so it can not be created");
+    	}
+	}
 }

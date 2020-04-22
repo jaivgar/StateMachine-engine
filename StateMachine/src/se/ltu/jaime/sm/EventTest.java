@@ -29,11 +29,13 @@ class EventTest {
 					eventNull.evaluate(testingSet));
 		
 		testingSet.add(null);
-		assertFalse("Should not find the null object added to the testing Set",eventNull.evaluate(testingSet));
+		assertFalse("Should not find the null object added to the testing Set",
+					eventNull.evaluate(testingSet));
 		
 		testingSet.clear();
 		testingSet.add(eventNull);
-		assertTrue("Should find the null Event added to the testing Set", eventNull.evaluate(testingSet));
+		assertTrue("Should find the null Event added to the testing Set", 
+					eventNull.evaluate(testingSet));
 	}
 
 	@Test
@@ -44,8 +46,13 @@ class EventTest {
 						eventUnderTest.evaluate(testingSet));
 		
 		testingSet.add(new Event("test"));
-		assertTrue("Should fint the event, because it has been added to the testing Set", eventUnderTest.evaluate(testingSet));
+		assertTrue("Should fint the event, because it has been added to the testing Set", 
+					eventUnderTest.evaluate(testingSet));
 
+		testingSet.clear();
+		testingSet.add(eventUnderTest);
+		assertTrue("Should fint the event, because the same one has been added to the testing Set", 
+					eventUnderTest.evaluate(testingSet));
 	}
 
 }
