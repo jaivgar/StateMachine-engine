@@ -25,6 +25,7 @@ class GuardTest {
 	final void testNullGuardCreationAndEvaluation() {
 		
 		assertThrows(IllegalArgumentException.class, () -> {
+				@SuppressWarnings("unused")
 				Guard nullGuard = new Guard(null, null);
 			}, 
 			"Guards created with null arguments should throw an exception, " +
@@ -32,6 +33,7 @@ class GuardTest {
 		);
 		
 		assertDoesNotThrow(() -> {
+				@SuppressWarnings("unused")
 				Guard nullValueGuard = new Guard("", null);
 			}, 
 			" Guards created with null value but non null variable name " +
