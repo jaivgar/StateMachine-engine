@@ -149,7 +149,7 @@ public class StateMachine {
              * one extending the other?
              */
             if(transition.action() != null) {
-            	transition.action().trigger(environment);
+            	transition.action().trigger(environment, events);
             }
             
             currentState = transition.targetState();

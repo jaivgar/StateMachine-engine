@@ -1,6 +1,7 @@
 package se.ltu.jaime.sm;
 
 import java.util.Map;
+import java.util.Set;
 
 public class ActionEnvironment extends Action {
     private final String variable;
@@ -13,8 +14,8 @@ public class ActionEnvironment extends Action {
     }
 
     @Override
-    public void trigger(final Map<String, Object> environment) {
-        super.trigger(environment);
+    public void trigger(final Map<String, Object> environment, final Set<Event> events) {
+        super.trigger(environment, events);
         environment.put(variable, value);
     }
 }

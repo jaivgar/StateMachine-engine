@@ -1,6 +1,7 @@
 package se.ltu.jaime.sm;
 
 import java.util.Map;
+import java.util.Set;
 
 public class Action {
     private final String message;
@@ -17,7 +18,7 @@ public class Action {
      *  The variables in the environment are match against the guards of the transitions and modified 
      *  by actions or external actors upon the State Machine.
      */
-    public void trigger(final Map<String, Object> environment) {
+    public void trigger(final Map<String, Object> environment, final Set<Event> events) {
     	
     	// TODO: perform calls to services according to the state or other input
     	
