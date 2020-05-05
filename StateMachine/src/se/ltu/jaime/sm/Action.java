@@ -3,25 +3,31 @@ package se.ltu.jaime.sm;
 import java.util.Map;
 import java.util.Set;
 
-public class Action {
-    private final String message;
-
-    public Action(final String message) {
-        this.message = message;
-    }
-
-    /**
-     * Function that executes code according to the action attached to the transition
-     * 
-     * @param environment The environment keeps a map of variables that can be modified in the context
-     *  of this State Machine.<br> 
-     *  The variables in the environment are match against the guards of the transitions and modified 
-     *  by actions or external actors upon the State Machine.
-     */
-    public void trigger(final Map<String, Object> environment, final Set<Event> events) {
-    	
-    	// TODO: perform calls to services according to the state or other input
-    	
-        System.out.println("ACTION: " + message);
-    }
+/**
+ * Represents an Action in a transition, that takes as argument the context
+ * of the State Machine:
+ * <p><ul>
+ * <li>The environment used to test the guards
+ * <li>The set of events active at this specific run of the machine
+ * </ul><p>
+ * <p>This is a {@link java.lang.FunctionalInterface} whose functional method 
+ * is {@link #trigger(Map<String, Object>, Set<Event>)}.
+ * 
+ * @author From Github issue #1 by Emanuel
+ *
+ */
+@FunctionalInterface
+public interface Action {
+	
+	/**
+	 * Triggers the action on the State Machine.
+	 * <p>
+	 * The result of this function depends entirely on the user. It could modify
+	 * the environment, activate new Events, print something on the screen or make
+	 * calls to an API.
+	 * 
+	 * @param environment  The Map used to store the variables of the State Machine
+	 * @param events  The Set of Events active in the State Machine
+	 */
+	void trigger(final Map<String, Object> environment, final Set<Event> events);
 }
