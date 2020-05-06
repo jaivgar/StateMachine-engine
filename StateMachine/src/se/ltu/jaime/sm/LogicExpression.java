@@ -5,9 +5,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * This class wraps together a logic operator and a number of operands
+ * This class represents a valid logic expression to be tested in a State Machine
+ * <p>
+ * It wraps together a logic operator and a number of operands to form the logic
+ * expression. <br>
+ * An alternative to this class could be the use of the functional interface
+ * {@code Predicate<T>}, which offer methods for AND, OR and Logical
+ * negation of a predicate that returns a boolean value.
  *
- * @param <E> Type of operand element grouped by this logic expression
+ * @param <E> Type of logic operand grouped by this logic expression
  * @param <C> Type of context used to evaluate the operands
  */
 public class LogicExpression<E extends Evaluable<C>, C> {
