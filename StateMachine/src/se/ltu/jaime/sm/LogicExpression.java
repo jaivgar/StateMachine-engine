@@ -4,17 +4,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
+/* TODO:Further functionality is achieved if the logic expressions can be 
+ * recursively composed of logic expressions
+ */
+
 /**
  * This class represents a valid logic expression to be tested in a State Machine
  * <p>
  * It wraps together a logic operator and a number of operands to form the logic
  * expression. <br>
  * An alternative to this class could be the use of the functional interface
- * {@code Predicate<T>}, which offer methods for AND, OR and Logical
+ * {@link java.util.function.Predicate Predicate}, which offer methods for AND, OR and Logical
  * negation of a predicate that returns a boolean value.
  *
- * @param <E> Type of logic operand grouped by this logic expression
- * @param <C> Type of context used to evaluate the operands
+ * @param <E>  Type of logic operand grouped by this logic expression
+ * @param <C>  Type of context used to evaluate the operands
  */
 public class LogicExpression<E extends Evaluable<C>, C> {
 
@@ -31,7 +35,7 @@ public class LogicExpression<E extends Evaluable<C>, C> {
 	 * First checks if each operand is true or false in this context, then
 	 * test those boolean values with respect to the operator chosen.
 	 * 
-	 * @param context The external context to evaluate each operand
+	 * @param context  The external context to evaluate each operand
 	 * 
 	 * @return True if the whole expression is true, after checking operands
 	 * and operator.

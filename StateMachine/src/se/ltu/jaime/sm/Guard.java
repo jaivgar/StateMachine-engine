@@ -8,11 +8,12 @@ import java.util.Objects;
  * <p>
  * A {@code Guard} represents a specific value of a variable that {@link Transition}
  * use as condition to their triggering, and that is match against the environment
- *  of the {@link StateMachine}, being the environment a set of variables with an
- * assigned value.
+ * of the {@link StateMachine}, being the environment a group of variables too, with 
+ * an assigned value.
  * <p>
- * The variable name must be not null, but the value may be null
+ * The guard name must be not null, but the value may be null
  * 
+ * @see #checkGuard
  * @see GuardTest#testNullGuardCreationAndEvaluation()
  */
 public class Guard implements Evaluable<Map<String, Object>>{
@@ -30,7 +31,9 @@ public class Guard implements Evaluable<Map<String, Object>>{
 
     /**
      * Constructs an instance of {@code Guard} with the given variable name and
-     * value
+     * value.
+     * <p>
+     * It validates the name of the Guard, to test that is not null.
      * 
      * @param variable the name of the variable
      * @param value the value of the variable
@@ -86,7 +89,7 @@ public class Guard implements Evaluable<Map<String, Object>>{
      * This method was preferred to {@code Objects.requireNonNull()} because it
      * allows to choose the exception thrown, instead of a fixed NullPointerException
      * 
-     * @param guardName The name of this guard, used as key in the Map where it 
+     * @param guardName  The name of this guard, used as key in the Map where it 
      * will be stored
      * 
      * @throws IllegalArgumentException if the argument is null

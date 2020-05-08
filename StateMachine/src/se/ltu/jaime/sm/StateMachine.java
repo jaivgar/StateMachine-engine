@@ -2,24 +2,86 @@ package se.ltu.jaime.sm;
 
 import java.util.*;
 
+/**
+ * A Finite State Machine, following Mealy paradigm.
+ * <p>
+ * It represent a whole State Machine, as a list of {@link State states} that are 
+ * connected through {@link Transition transitions}. The State Machine also has
+ * a context, that stores information of the events active and the environment's
+ * variables value.
+ * <p>
+ * The output of the State Machine is present in the actions of the transitions,
+ * and the transitions are dependent on the active state and the input (the
+ * context).<br>
+ * This is in line with a Mealy State Machine behavior, which offers as benefit
+ * over Moore State Machines that require less States to model a similar system.
+ *  
+ * <h4>Implementation notes</h4>
+ * This class is immutable
+ */
 public class StateMachine {
 	
+	/**
+	 * The {@code Set} of {@link Event events} that are active in this State Machine.
+	 */
     private final Set<Event> events;
+    
+    /**
+     * The environment of the State Machine, represented by a {@code Map} of
+     * variables with a name and a value of any type.
+     */
     private final Map<String, Object> environment;
+    
+    /**
+     * The {@code List} of {@link State states} that conform this State Machine.
+     */
     private final List<State> states;
+    
+    /**
+     * The {@code List} of {@link Transition transitions} that conform this 
+     * State Machine.
+     */
     private final List<Transition> transitions;
     
-    // TODO: Enable parallel executions with more than one active state at the same time, ie. List<CurrentStates>
+    /* TODO: Enable parallel executions with more than one active state at the 
+     * same time, i.e. List<CurrentStates>. But this implies that states have an
+     * order, or priority, then the issue is how to order them.
+     * If transitions also have priorities, they could impose state order?
+     */
+    /**
+     * The reference of the current/active state in this State Machine
+     */
     private int currentState;
 
+    /**
+     * Constructs an instance of a State Machine with the given {@code List}
+     * of states and transitions, setting the first state as the initial state.
+     * 
+     * @param states  The list of states of this State Machine
+     * @param transitions  The list of transitions part of this State Machine
+     */
     public StateMachine(final List<State> states, final List<Transition> transitions) {
         this(states, transitions, 0);
     }
 
+    /**
+     * Constructs an instance of a State Machine with the given {@code List}
+     * of states and transitions, and the reference to the initial state.
+     * <p>
+     * It validates the arguments provided, to test that the State Machine is
+     * well-formed.
+     * 
+     * @param states  The list of states of this State Machine
+     * @param transitions  The list of transitions part of this State Machine
+     * @param currentState  The initial state
+     * 
+     * @see #checkStateMachine(List, List)
+     */
     public StateMachine(final List<State> states, final List<Transition> transitions, final int currentState) {
         
         /* Check consistency of State Machine before creating the object:
          *  - States should not point to Transitions that do not exist
+         *  - States should have unique names
          *  - Transitions should not target states that do not exist
          */
         checkStateMachine(states, transitions);
@@ -34,7 +96,7 @@ public class StateMachine {
     }
 
 	/**
-     * Obtains the current state of the State Machine
+     * Obtains the current/active state of the State Machine
      * 
      * @return The State which will be checked for transitions in the {@link #update()} method
      */
@@ -120,7 +182,10 @@ public class StateMachine {
              */
             
             //TODO: Here is where we decided if we accept transitions without Events
-            // Now we proceed analyzing the transition if there is no Events, as if they returned True
+            /* Now, the behavior is to accept transitions that have no Events, and
+             * continue evaluating the  transition, its guards, as if the Events
+             * were true 
+             */
             if(transition.event() != null) {
                 try {
 					if (!transition.event().testLogicExpression(events)) {
@@ -128,12 +193,17 @@ public class StateMachine {
 					}
 				} catch (IllegalLogicExpressionException e) {
 					// TODO Should I catch the exception or propagate it...
+					// Now if the expression is illegal it will be evaluated as false
 					e.printStackTrace();
+					continue;
 				}
             }
             
             //TODO: Here is where we decided if we accept transitions without Guards
-            // Now we proceed analyzing the transition if there is no Guards, as if they returned True
+            /* Now, the behavior is to accept transitions that have no Guards, and
+             * activate the transition, triggering its action, as if the Guards
+             * were true
+             */
             if(transition.guard() != null) {
             	try {
 					if (!transition.guard().testLogicExpression(environment)) {
@@ -141,13 +211,12 @@ public class StateMachine {
 					}
 				} catch (IllegalLogicExpressionException e) {
 					// TODO Should I catch the exception or propagate it...
+					// Now if the expression is illegal it will be evaluated as false
 					e.printStackTrace();
+					continue;
 				}
             }
 
-            /* If the action always trigger with an environment, is it necessary to have 2 classes 
-             * one extending the other?
-             */
             if(transition.action() != null) {
             	transition.action().trigger(environment, events);
             }
@@ -162,20 +231,47 @@ public class StateMachine {
         
     }
 
+    /**
+     * Checks that the arguments provided to the State Machine constructor are
+     * correct to produce a well-formed State Machine.
+     * <p>
+     * The tests performed are:
+     * <p><ul>
+     * <li>Tests that the states contains references to transitions in the 
+     * available range
+     * <li>Tests the states name for duplicates, each name should be unique in 
+     * this State Machine.
+     * <li>Tests that the transitions contains references to states in the 
+     * available range
+     * </ul><p>
+     * 
+     * @param statesUnderTest  The list of states
+     * @param transitionsUnderTest  The list of transitions
+     * 
+     * @throws IllegalArgumentException if any of the arguments does not follow
+     * the rules to create a correct State Machine
+     */
     private void checkStateMachine(List<State> statesUnderTest, List<Transition> transitionsUnderTest ) throws IllegalArgumentException {
-    	// Check that states do not point to Transitions that do not exist
+    	
     	for (final State s: statesUnderTest) {
+    		// Check that states do not point to Transitions that do not exist
     		for(int i: s.transitionsIndexes()) {
-    			if (i >= transitionsUnderTest.size()) {
+    			if (i >= transitionsUnderTest.size() || i < 0) {
     				throw new IllegalArgumentException("State points to nonexistent transition");
     			}
     		}
     	}
     	
+    	// Check that states do not have duplicate names
+    	if(Utility.hasDuplicate(statesUnderTest)){
+    		throw new IllegalArgumentException("State Machine contains different states with the "
+    											+ "same name");
+    	}
+    	
     	// Check that transitions should not target states that do not exist
     	for(final Transition t: transitionsUnderTest) {
-    		if(t.targetState() >= statesUnderTest.size()) {
-    			throw new IllegalArgumentException("Transition tarets to nonexistent state");
+    		if(t.targetState() >= statesUnderTest.size() || t.targetState() < 0) {
+    			throw new IllegalArgumentException("Transition targets nonexistent state");
     		}
     	}
 	}

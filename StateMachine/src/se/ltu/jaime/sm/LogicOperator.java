@@ -2,16 +2,16 @@ package se.ltu.jaime.sm;
 
 /**
  * This enumeration represents the basic logical operators that can be used to test
- * events and guards. At the moment it supports NOT, AND, OR and XOR.
- *
+ * events and guards. 
+ * <p>
+ * The operators are wrapped with operands in {@link LogicExpression}, that
+ * is used by events or guards. Because operators are not isolated entities,
+ * they are relations between operands, or modifiers of operands like NOT.
+ * <p>
+ * At the moment the class supports the operators NOT, AND, OR and XOR.
+ * 
  */
 public enum LogicOperator {
-	
-	/*TODO: I will probably need to wrap the operators with the event/guards in an extra class, 
-	 * like a LogicExpression, because an event can not have an operator (except NOT), they are
-	 * relations between operands. Further functionality is achieved if this logic expression
-	 * can be composed of logic expression.
-	 */
 	
 	NOT{
 		@Override
@@ -83,7 +83,7 @@ public enum LogicOperator {
 	/**
 	 * Combines the boolean representation of the operands according to the operator chosen.
 	 * 
-	 * @param operands The array of operands as boolean variables that will be used by the operators
+	 * @param operands  The array of operands as boolean variables that will be used by the operators
 	 */
 	public abstract boolean evaluateOperator(final Boolean... operands) throws IllegalNumberOfOperandsException;
 

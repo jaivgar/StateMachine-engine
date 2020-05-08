@@ -10,8 +10,8 @@ import java.util.Set;
  * <li>The environment used to test the guards
  * <li>The set of events active at this specific run of the machine
  * </ul><p>
- * <p>This is a {@link java.lang.FunctionalInterface} whose functional method 
- * is {@link #trigger(Map<String, Object>, Set<Event>)}.
+ * <p>This is a {@link java.lang.FunctionalInterface FunctionalInterface} whose 
+ * abstract method is {@link #trigger(Map<String, Object>, Set<Event>)}.
  * 
  * @author From Github issue #1 by Emanuel
  *

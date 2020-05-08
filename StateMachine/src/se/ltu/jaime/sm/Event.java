@@ -23,6 +23,7 @@ public class Event implements Evaluable<Set<Event>>{
 
     /**
      * Constructs an instance of an {@code Event} with the given name
+     * 
      * @param name  The name of the Event, may be null
      */
     public Event(final String name) {
