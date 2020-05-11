@@ -34,6 +34,11 @@ public class Event implements Evaluable<Set<Event>>{
 		return eventName;
 	}
     
+	@Override
+	public String toString() {
+		return "Event [eventName=" + eventName + "]";
+	}
+
 	/**
      * Evaluates this event by comparing against the Set of {@code Events}
      * present in the State Machine.
