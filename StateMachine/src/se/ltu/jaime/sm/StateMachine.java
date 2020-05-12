@@ -216,17 +216,32 @@ public class StateMachine {
 					continue;
 				}
             }
-
+            
+            /* CLear Events after transition satisfies its conditions (Events & Guards)
+             * and before the action is executed
+             */
+            events.clear();
+            
             if(transition.action() != null) {
             	transition.action().trigger(environment, events);
             }
             
             currentState = transition.targetState();
-            break; // TODO: Check if any other transitions are also satisfied. If so, remove break and throw exception?
+            /* TODO: Check if any other transitions are also satisfied. 
+             * If so, remove break, remove event clear before actions and
+             * throw exception for nondeterministic behavior?
+             */
+            break; 
         }
         
-        // We remove the events after they have been checked against the current state.
-        events.clear();
+        /* The events are removed after they have been checked against all the transitions.
+         * But this poses a problem if the transition Action throws an Event, as it would 
+         * be immediately removed.
+         * Solution: Clear the Event before any action is triggered, but then is not
+         * possible to continue testing the transitions. It's fine if we accept only one
+         * transition, deterministic State Machine.
+         */
+        //events.clear();
         return true;
         
     }
