@@ -11,7 +11,7 @@ import java.util.Set;
  * <li>The set of events active at this specific run of the machine
  * </ul><p>
  * <p>This is a {@link java.lang.FunctionalInterface FunctionalInterface} whose 
- * abstract method is {@link #trigger(Map<String, Object>, Set<Event>)}.
+ * abstract method is {@link #trigger(Map, Set)}.
  * 
  * @author From Github issue #1 by Emanuel
  *
