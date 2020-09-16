@@ -15,10 +15,10 @@ import java.util.Set;
  *
  */
 public class Event implements Evaluable<Set<Event>>{
-	
-	/**
-	 * The name is used to identify this {@code Event}
-	 */
+    
+    /**
+     * The name is used to identify this {@code Event}
+     */
     private final String eventName;
 
     /**
@@ -31,15 +31,15 @@ public class Event implements Evaluable<Set<Event>>{
     }
     
     public String getName() {
-		return eventName;
-	}
+        return eventName;
+    }
     
-	@Override
-	public String toString() {
-		return "Event [eventName=" + eventName + "]";
-	}
+    @Override
+    public String toString() {
+        return "Event [eventName=" + eventName + "]";
+    }
 
-	/**
+    /**
      * Evaluates this event by comparing against the Set of {@code Events}
      * present in the State Machine.
      * <p>
@@ -55,30 +55,30 @@ public class Event implements Evaluable<Set<Event>>{
      */
     public boolean evaluate(final Set<Event> names) {
 
-    	for(Event e: names) {
-    		// An null object can never match an Event
-    		if(e == null) {
-    			continue;
-    		}
-    		// There could be an Event without name, which requires extra test
-    		if(e.getName() == null) {
-    			if (this.eventName == null) {
-    				return true;
-    			}
-    		}
-    		else {
-        		if(e.getName().equals(this.eventName)) {
-        			return true;
-        		}
-    		}
-    	}
-    	
-    	return false;
-    	/*
-    	 * The use of contains() method from Set interface with Event Object 
-    	 * requires to override the equals() method from Object class, and 
-    	 * therefore also the hash() method
-    	 */
+        for(Event e: names) {
+            // An null object can never match an Event
+            if(e == null) {
+                continue;
+            }
+            // There could be an Event without name, which requires extra test
+            if(e.getName() == null) {
+                if (this.eventName == null) {
+                    return true;
+                }
+            }
+            else {
+                if(e.getName().equals(this.eventName)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+        /*
+         * The use of contains() method from Set interface with Event Object 
+         * requires to override the equals() method from Object class, and 
+         * therefore also the hash() method
+         */
         //return names.contains(this);
     }
 }

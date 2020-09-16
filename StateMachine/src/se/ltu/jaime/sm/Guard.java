@@ -11,16 +11,16 @@ import java.util.Objects;
  * of the {@link StateMachine}, being the environment a group of variables too, with 
  * an assigned value.
  * <p>
- * The guard name must be not null, but the value may be null
+ * The guard name must be not null, but the guard value may be null
  * 
  * @see #checkGuard
  * @see GuardTest#testNullGuardCreationAndEvaluation()
  */
 public class Guard implements Evaluable<Map<String, Object>>{
-	
-	/**
-	 * The name of the variable represented by this {@code Guard}, not null
-	 */
+    
+    /**
+     * The name of the variable represented by this {@code Guard}, not null
+     */
     private final String variable;
     
     /**
@@ -41,22 +41,22 @@ public class Guard implements Evaluable<Map<String, Object>>{
      * @throws IllegalArgumentException if the {@link variable} is null
      */
     public Guard(final String variable, final Object value) {
-    	
-    	checkGuard(variable);
-    	
+        
+        checkGuard(variable);
+        
         this.variable = variable;
         this.value = value;
     }
     
     public String getVariable() {
-		return variable;
-	}
+        return variable;
+    }
 
-	public Object getValue() {
-		return value;
-	}
+    public Object getValue() {
+        return value;
+    }
 
-	/**
+    /**
      * Function that checks if the conditional expression of the guard is true, 
      * which is a requirement to trigger the action of the transition and change state.
      * 
@@ -69,17 +69,17 @@ public class Guard implements Evaluable<Map<String, Object>>{
      * false otherwise
      */
     public boolean evaluate(final Map<String, Object> environment) {
-    	if (!environment.containsKey(this.getVariable()))
-    		return false;
-    	
-    	return Objects.equals(environment.get(variable), value);
-
-    	/* Is there a difference between above and below?
-    	 * Below throws exception when environment.get(variable) == null
-    	 */
-    	//return environment.get(variable).equals(value);
+        if (!environment.containsKey(this.getVariable()))
+            return false;
         
-    	
+        return Objects.equals(environment.get(variable), value);
+
+        /* Is there a difference between above and below?
+         * Below throws exception when environment.get(variable) == null
+         */
+        //return environment.get(variable).equals(value);
+        
+        
     }
     
     /**
@@ -92,11 +92,11 @@ public class Guard implements Evaluable<Map<String, Object>>{
      * @param guardName  The name of this guard, used as key in the Map where it 
      * will be stored
      * 
-     * @throws IllegalArgumentException if the argument is null
+     * @throws IllegalArgumentException if the argument {@code guardName} is null
      */
     private void checkGuard(String guardName) {
-    	if (guardName == null) {
-    		throw new IllegalArgumentException("Guard has no name, so it can not be created");
-    	}
-	}
+        if (guardName == null) {
+            throw new IllegalArgumentException("Guard has no name, so it can not be created");
+        }
+    }
 }
