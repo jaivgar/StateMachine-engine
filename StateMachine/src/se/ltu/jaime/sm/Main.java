@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import se.ltu.jaime.sm.StateMachine.UpdateAction;
+
 
 public class Main {
     public static void main(final String[] args) {
@@ -78,10 +80,10 @@ public class Main {
         
         // Check every time if we reached the final state to stop operations
         while(!endState && i < 20){
-        	stateName = machine.getCurrentState().name();
+        	stateName = machine.getActiveState().name();
         	System.out.println("\n-> Now in state " + stateName);
         	
-        	if (!machine.getCurrentState().name().equals("A")) {
+        	if (!machine.getActiveState().name().equals("A")) {
         		System.out.println("Received Event X from external actor");
         		machine.setEvent("EVENT-X");
         		
@@ -113,7 +115,7 @@ public class Main {
         	}
         	
         	i++;
-        	endState = !machine.update();
+        	endState = machine.update().getUpdateAction() == UpdateAction.END;
         }
     }
     
@@ -199,10 +201,10 @@ public class Main {
         
      // Check every time if we reached the final state to stop operations
         while(!endState && i < 20){
-        	stateName = machine.getCurrentState().name();
+        	stateName = machine.getActiveState().name();
         	System.out.println(stateName);
         	
-        	if (!machine.getCurrentState().name().equals("A")) {
+        	if (!machine.getActiveState().name().equals("A")) {
         		System.out.println("Received Event X from external actor");
         		machine.setEvent("EVENT-X");
         		
@@ -234,7 +236,7 @@ public class Main {
         	}
         	
         	i++;
-        	endState = !machine.update();
+        	endState = machine.update().getUpdateAction() == UpdateAction.END;
         }
         
         /* Old tests
